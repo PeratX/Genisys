@@ -10,6 +10,7 @@ namespace pocketmine\entity;
 
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
+use pocketmine\item\Item as ItemItem;
 
 class SnowGolem extends Animal{
 	const NETWORK_ID = 21;
@@ -17,6 +18,8 @@ class SnowGolem extends Animal{
 	public $width = 0.3;
 	public $length = 0.9;
 	public $height = 1.8;
+
+	public $dropEx = [8, 8];//CM
 	
 	public function initEntity(){
 		$this->setMaxHealth(4);
@@ -44,4 +47,15 @@ class SnowGolem extends Animal{
 
 		parent::spawnTo($player);
 	}
+	public function getCoinDrop() :int{//CM
+		return 8;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::CARROT, 0, 3)//CM
+		];
+		return $drops;
+	}
+
 }

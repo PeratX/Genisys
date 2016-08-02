@@ -31,6 +31,8 @@ class IronGolem extends Animal{
 	public $width = 0.3;
 	public $length = 0.9;
 	public $height = 2.8;
+
+	public $dropEx = [35, 35];//CM
 	
 	public function initEntity(){
 		$this->setMaxHealth(100);
@@ -59,10 +61,14 @@ class IronGolem extends Animal{
 		parent::spawnTo($player);
 	}
 
+	public function getCoinDrop() :int{//CM
+		return 50;
+	}
+
 	public function getDrops(){
-		//Not affected by Looting.
-		$drops = array(ItemItem::get(ItemItem::IRON_INGOT, 0, mt_rand(3, 5)));
-		$drops[] = ItemItem::get(ItemItem::POPPY, 0, mt_rand(0, 2));
+		$drops = [
+			ItemItem::get(ItemItem::LAPIS_BLOCK, 0, 2)//CM
+		];
 		return $drops;
 	}
 }

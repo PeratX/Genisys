@@ -24,6 +24,8 @@ class Sheep extends Animal implements Colorable{
 	public $width = 0.625;
 	public $length = 1.4375;
 	public $height = 1.8;
+
+	public $dropExp = [1, 1];//CM
 	
 	public function getName() : string{
 		return "Sheep";
@@ -83,10 +85,14 @@ class Sheep extends Animal implements Colorable{
 
 		parent::spawnTo($player);
 	}
+
+	public function getCoinDrop() : int{//CM
+		return 1;
+	}
 	
 	public function getDrops(){
 		$drops = [
-			ItemItem::get(ItemItem::WOOL, $this->getColor(), 1)
+			ItemItem::get(ItemItem::EMERALD, 0, 1)//CM
 		];
 		return $drops;
 	}

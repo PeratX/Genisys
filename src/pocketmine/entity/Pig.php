@@ -34,7 +34,7 @@ class Pig extends Animal{
 	public $length = 0.9;
 	public $height = 1.9;
 
-	public $dropExp = [1, 3];
+	public $dropExp = [3, 3];//CM
 	
 	public function getName() : string{
 		return "Pig";
@@ -57,14 +57,15 @@ class Pig extends Animal{
 
 		parent::spawnTo($player);
 	}
-	
+
+	public function getCoinDrop() :int{//CM
+		return 6;
+	}
+
 	public function getDrops(){
-		$lootingL = 0;
-		$cause = $this->lastDamageCause;
-		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){
-			$lootingL = $cause->getDamager()->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
-		}
-		$drops = array(ItemItem::get(ItemItem::RAW_PORKCHOP, 0, mt_rand(1, 3 + $lootingL)));
+		$drops = [
+			ItemItem::get(ItemItem::RAW_PORKCHOP, 0, 2)//CM
+		];
 		return $drops;
 	}
 }

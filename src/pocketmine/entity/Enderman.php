@@ -8,6 +8,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
@@ -18,7 +19,7 @@ class Enderman extends Monster{
 	public $length = 0.9;
 	public $height = 1.8;
 
-	public $dropExp = [5, 5];
+	public $dropExp = [15, 15];//CM
 	
 	public function getName() : string{
 		return "Enderman";
@@ -40,5 +41,16 @@ class Enderman extends Monster{
 		$player->dataPacket($pk);
 
 		parent::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{//CM
+		return 40;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::REDSTONE, 0 ,5)//CM
+		];
+		return $drops;
 	}
 }

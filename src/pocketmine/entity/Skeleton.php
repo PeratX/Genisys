@@ -9,6 +9,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Dye;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\network\protocol\MobEquipmentPacket;
@@ -17,7 +18,11 @@ use pocketmine\item\Item as ItemItem;
 class Skeleton extends Monster implements ProjectileSource{
 	const NETWORK_ID = 34;
 
-	public $dropExp = [5, 5];
+	public $width = 0.6 * 2;
+	public $length = 0.6 * 10;
+	public $height = 1.8 * 2;
+
+	public $dropExp = [50, 50];//CM
 	
 	public function getName() : string{
 		return "Skeleton";
@@ -47,5 +52,16 @@ class Skeleton extends Monster implements ProjectileSource{
 		$pk->selectedSlot = 0;
 
 		$player->dataPacket($pk);
+	}
+
+	public function getCoinDrop() :int{
+		return 80;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::DYE, Dye::LAPIS_LAZULI, 3)//CM
+		];
+		return $drops;
 	}
 }

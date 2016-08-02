@@ -33,6 +33,8 @@ class Mooshroom extends Animal{
 	public $width = 0.3;
 	public $length = 0.9;
 	public $height = 1.8;
+
+	public $dropExp = [40, 40];//CM
 	
 	public function getName() : string{
 		return "Mooshroom";
@@ -55,15 +57,15 @@ class Mooshroom extends Animal{
 
 		parent::spawnTo($player);
 	}
-	
+
+	public function getCoinDrop() :int{//CM
+		return 35;
+	}
+
 	public function getDrops(){
-		$lootingL = 0;
-		$cause = $this->lastDamageCause;
-		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){
-			$lootingL = $cause->getDamager()->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
-		}
-		$drops = array(ItemItem::get(ItemItem::RAW_BEEF, 0, mt_rand(1, 3 + $lootingL)));
-		$drops[] = ItemItem::get(ItemItem::LEATHER, 0, mt_rand(0, 2 + $lootingL));
+		$drops = [
+			ItemItem::get(ItemItem::COOKED_BEEF, 0 ,1)//CM
+		];
 		return $drops;
 	}
 }

@@ -8,6 +8,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item as ItemItem;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\level\format\FullChunk;
 use pocketmine\network\protocol\AddEntityPacket;
@@ -20,12 +21,14 @@ class Bat extends FlyingAnimal{
 
 	const DATA_IS_RESTING = 16;
 
-	public $width = 0.6;
-	public $length = 0.6;
-	public $height = 0.6;
+	public $width = 0.6 * 10;
+	public $length = 0.6 * 20;
+	public $height = 0.6 * 10;
 
 	public $flySpeed = 0.8;
 	public $switchDirectionTicks = 100;
+
+	public $dropExp = [15, 15];//CM
 
 	public function getName() : string {
 		return "Bat";
@@ -76,5 +79,16 @@ class Bat extends FlyingAnimal{
 		$player->dataPacket($pk);
 
 		parent::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{//CM
+		return 20;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::REDSTONE, 0 ,5)//CM
+		];
+		return $drops;
 	}
 }

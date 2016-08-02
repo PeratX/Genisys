@@ -9,6 +9,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item as ItemItem;
 use pocketmine\event\entity\CreeperPowerEvent;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\network\protocol\AddEntityPacket;
@@ -22,7 +23,11 @@ class Creeper extends Monster{
 	const DATA_SWELL_OLD = 18;
 	const DATA_POWERED = 19;
 
-	public $dropExp = [5, 5];
+	public $width = 0.6 * 20;
+	public $length = 0.6 * 50;
+	public $height = 1.8 * 20;
+
+	public $dropExp = [300, 300];//CM
 	
 	public function getName() : string{
 		return "Creeper";
@@ -71,5 +76,16 @@ class Creeper extends Monster{
 		$player->dataPacket($pk);
 
 		parent::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{
+		return 400;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::LAPIS_BLOCK, 0, 3)
+		];
+		return $drops;
 	}
 }

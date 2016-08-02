@@ -22,6 +22,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Dye;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\network\protocol\MobEquipmentPacket;
@@ -29,8 +30,6 @@ use pocketmine\item\Item as ItemItem;
 
 class Stray extends Skeleton{
 	const NETWORK_ID = 46;
-
-	public $dropExp = [5, 5];
 	
 	public function getName() : string{
 		return "Stray";
@@ -60,5 +59,12 @@ class Stray extends Skeleton{
 		$pk->selectedSlot = 0;
 
 		$player->dataPacket($pk);
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::DYE, Dye::LAPIS_LAZULI, 2)//CM
+		];
+		return $drops;
 	}
 }

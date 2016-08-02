@@ -22,11 +22,12 @@
 namespace pocketmine\entity;
 
 use pocketmine\Player;
-use pocketmine\math\Vector3;
+use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 
 class Husk extends Zombie{
 	const NETWORK_ID = 47;
+	public $dropExp = [4, 4];//CM
 	
 	public function getName(){
 		return "Husk";
@@ -48,5 +49,16 @@ class Husk extends Zombie{
 		$player->dataPacket($pk);
 
 		Entity::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{//CM
+		return 9;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::APPLE, 0 ,2)//CM
+		];
+		return $drops;
 	}
 }

@@ -8,6 +8,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
@@ -18,7 +19,7 @@ class Wolf extends Animal{
 	public $length = 0.9;
 	public $height = 1.8;
 
-	public $dropExp = [1, 3];
+	public $dropExp = [5, 5];//CM
 	
 	public function getName() : string{
 		return "Wolf";
@@ -40,5 +41,16 @@ class Wolf extends Animal{
 		$player->dataPacket($pk);
 
 		parent::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{//CM
+		return 12;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::BONE, 0, 1)//CM
+		];
+		return $drops;
 	}
 }

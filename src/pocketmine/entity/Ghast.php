@@ -21,15 +21,18 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item as ItemItem;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
 class Ghast extends FlyingAnimal{
 	const NETWORK_ID = 41;
 
-	public $width = 6;
-	public $length = 6;
-	public $height = 6;
+	public $width = 6 * 4;
+	public $length = 6 * 4;
+	public $height = 6 * 2;
+
+	public $dropExp = [60, 60];//CM
 	
 	public function getName() : string{
 		return "Ghast";
@@ -56,5 +59,16 @@ class Ghast extends FlyingAnimal{
 		$player->dataPacket($pk);
 
 		parent::spawnTo($player);
+	}
+
+	public function getCoinDrop() :int{
+		return 60;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::REDSTONE_BLOCK, 0 ,2)
+		];
+		return $drops;
 	}
 }

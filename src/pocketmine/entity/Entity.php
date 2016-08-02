@@ -302,6 +302,10 @@ abstract class Entity extends Location implements Metadatable{
 
 	}
 
+	public function getCoinDrop() :int{//CM
+		return 0;
+	}
+
 	/**
 	 * @return int
 	 */

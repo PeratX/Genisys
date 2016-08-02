@@ -21,8 +21,9 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Dye;
 use pocketmine\nbt\tag\ByteTag;
-use pocketmine\nbt\tag\IntTag;
+use pocketmine\item\Item as ItemItem;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\protocol\AddEntityPacket;
@@ -40,9 +41,11 @@ class Villager extends Creature implements NPC, Ageable{
 
 	const DATA_PROFESSION_ID = 16;
 
-	public $width = 0.6;
-	public $length = 0.6;
-	public $height = 1.8;
+	public $width = 0.6 * 10;
+	public $length = 0.6 * 10;
+	public $height = 1.8 * 4;
+
+	public $dropExp = [100, 100];//CM
 
 	public function getName() : string{
 		return "Villager";
@@ -99,5 +102,16 @@ class Villager extends Creature implements NPC, Ageable{
 
 	public function isBaby(){
 		return $this->getDataFlag(self::DATA_AGEABLE_FLAGS, self::DATA_FLAG_BABY);
+	}
+
+	public function getCoinDrop() :int{
+		return 200;
+	}
+
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::DYE, Dye::LAPIS_LAZULI, 6)//CM
+		];
+		return $drops;
 	}
 }

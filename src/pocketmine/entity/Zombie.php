@@ -38,7 +38,7 @@ class Zombie extends Monster{
 	public $length = 0.6;
 	public $height = 1.8;
 
-	public $dropExp = [5, 5];
+	public $dropExp = [3, 3];//CM
 	
 	public $drag = 0.2;
 	public $gravity = 0.3;
@@ -232,31 +232,14 @@ class Zombie extends Monster{
 		parent::spawnTo($player);
 	}
 
-	public function getDrops(){
-		$lootingL = 0;
-		$cause = $this->lastDamageCause;
-		$drops = [];
-		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){
-			$lootingL = $cause->getDamager()->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
-			if(mt_rand(0, 199) < (5 + 2 * $lootingL)){
-				switch(mt_rand(0, 3)){
-					case 0:
-						$drops[] = ItemItem::get(ItemItem::IRON_INGOT, 0, 1);
-						break;
-					case 1:
-						$drops[] = ItemItem::get(ItemItem::CARROT, 0, 1);
-						break;
-					case 2:
-						$drops[] = ItemItem::get(ItemItem::POTATO, 0, 1);
-						break;
-				}
-			}
-			$count = mt_rand(0, 2 + $lootingL);
-			if($count > 0){
-				$drops[] = ItemItem::get(ItemItem::ROTTEN_FLESH, 0, $count);
-			}
-		}
+	public function getCoinDrop() :int{//CM
+		return 7;
+	}
 
+	public function getDrops(){
+		$drops = [
+			ItemItem::get(ItemItem::APPLE, 0 ,1)//CM
+		];
 		return $drops;
 	}
 }
