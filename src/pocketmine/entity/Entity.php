@@ -83,7 +83,7 @@ abstract class Entity extends Location implements Metadatable{
 	//const DATA_TYPE_ROTATION = 8;
 	//const DATA_TYPE_LONG = 8;
 	const DATA_TYPE_LONG = 7;
-	
+
 	const DATA_FLAGS = 0;
 	const DATA_AIR = 1;
 	const DATA_NAMETAG = 2;
@@ -353,7 +353,7 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	public function setSneaking($value = true){
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SNEAKING, (bool)$value);
+		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SNEAKING, (bool) $value);
 	}
 
 	public function isSprinting(){
@@ -456,10 +456,10 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	/**
-	 * @param int|string $type
-	 * @param FullChunk  $chunk
-	 * @param CompoundTag   $nbt
-	 * @param            $args
+	 * @param int|string  $type
+	 * @param FullChunk   $chunk
+	 * @param CompoundTag $nbt
+	 * @param             $args
 	 *
 	 * @return Entity|Projectile
 	 */
@@ -715,7 +715,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @param int $amount
 	 */
 	public function setHealth($amount){
-		$amount = (int)$amount;
+		$amount = (int) $amount;
 		if($amount === $this->health){
 			return;
 		}
@@ -725,7 +725,7 @@ abstract class Entity extends Location implements Metadatable{
 				$this->kill();
 			}
 		}elseif($amount <= $this->getMaxHealth() or $amount < $this->health){
-			$this->health = (int)$amount;
+			$this->health = (int) $amount;
 		}else{
 			$this->health = $this->getMaxHealth();
 		}
@@ -760,7 +760,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @param int $amount
 	 */
 	public function setMaxHealth($amount){
-		$this->maxHealth = (int)$amount;
+		$this->maxHealth = (int) $amount;
 	}
 
 	public function canCollideWith(Entity $entity){
@@ -950,7 +950,7 @@ abstract class Entity extends Location implements Metadatable{
 			$this->lastYaw = $this->yaw;
 			$this->lastPitch = $this->pitch;
 
-			$this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->x, $this->y + $this->getEyeHeight(), $this->z, $this->yaw, $this->pitch, $this->yaw);
+			$this->addMovement($this->x, $this->y + $this->getEyeHeight(), $this->z, $this->yaw, $this->pitch, $this->yaw);
 		}
 
 		if($diffMotion > 0.0025 or ($diffMotion > 0.0001 and $this->getMotion()->lengthSquared() <= 0.0001)){ //0.05 ** 2
@@ -960,6 +960,10 @@ abstract class Entity extends Location implements Metadatable{
 
 			$this->level->addEntityMotion($this->chunk->getX(), $this->chunk->getZ(), $this->id, $this->motionX, $this->motionY, $this->motionZ);
 		}
+	}
+
+	public function addMovement($x, $y, $z, $yaw, $pitch, $headYaw = null){
+		$this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $x, $y, $z, $yaw, $pitch, $headYaw === null ? $yaw : $headYaw);
 	}
 
 	/**
@@ -1088,7 +1092,7 @@ abstract class Entity extends Location implements Metadatable{
 			return;
 		}
 		$damage = floor($fallDistance - 3 - ($this->hasEffect(Effect::JUMP) ? $this->getEffect(Effect::JUMP)->getAmplifier() + 1 : 0));
-		
+
 		//Get the block directly beneath the player's feet, check if it is a slime block
 		if($this->getLevel()->getBlock($this->floor()->subtract(0, 1, 0)) instanceof SlimeBlock){
 			$damage = 0;
@@ -1436,7 +1440,7 @@ abstract class Entity extends Location implements Metadatable{
 		}
 
 		if($this->getLevel()->getServer()->redstoneEnabled and !$this->isPlayer){
-			/** @var \pocketmine\block\PressurePlate $block **/
+			/** @var \pocketmine\block\PressurePlate $block * */
 			foreach($this->activatedPressurePlates as $key => $block){
 				if(!isset($blocksaround[$key])) $block->checkActivation();
 			}
@@ -1561,7 +1565,7 @@ abstract class Entity extends Location implements Metadatable{
 		$this->removeAllEffects();
 		$this->scheduleUpdate();
 
-		if($this->getLevel()->getServer()->expEnabled) {
+		if($this->getLevel()->getServer()->expEnabled){
 			$exp = mt_rand($this->getDropExpMin(), $this->getDropExpMax());
 			if($exp > 0) $this->getLevel()->spawnXPOrb($this, $exp);
 		}
@@ -1654,7 +1658,7 @@ abstract class Entity extends Location implements Metadatable{
 		}
 
 		if($this->getLevel()->getServer()->redstoneEnabled){
-			/** @var \pocketmine\block\PressurePlate $block **/
+			/** @var \pocketmine\block\PressurePlate $block * */
 			foreach($this->activatedPressurePlates as $key => $block){
 				$block->checkActivation();
 			}
@@ -1662,7 +1666,7 @@ abstract class Entity extends Location implements Metadatable{
 
 		$this->activatedPressurePlates = [];
 
-		if($this->attributeMap != null) {
+		if($this->attributeMap != null){
 			$this->attributeMap = null;
 		}
 	}
@@ -1796,7 +1800,7 @@ abstract class Entity extends Location implements Metadatable{
 	 */
 	public function setDataFlag($propertyId, $id, $value = true, $type = self::DATA_TYPE_BYTE){
 		if($this->getDataFlag($propertyId, $id) !== $value){
-			$flags = (int)$this->getDataProperty($propertyId);
+			$flags = (int) $this->getDataProperty($propertyId);
 			$flags ^= 1 << $id;
 			$this->setDataProperty($propertyId, $type, $flags);
 		}
@@ -1809,7 +1813,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @return bool
 	 */
 	public function getDataFlag($propertyId, $id){
-		return (((int)$this->getDataProperty($propertyId)) & (1 << $id)) > 0;
+		return (((int) $this->getDataProperty($propertyId)) & (1 << $id)) > 0;
 	}
 
 	public function __destruct(){
