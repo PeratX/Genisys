@@ -24,6 +24,7 @@ namespace pocketmine\command\defaults;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
+use pocketmine\item\Item;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
@@ -48,6 +49,14 @@ class TeleportCommand extends VanillaCommand{
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return true;
+		}
+
+		if($sender instanceof Player){
+			if(!$sender->getInventory()->contains(Item::get(Item::EMERALD, 0, 1))){
+				$sender->sendMessage(TextFormat::RED . "没翡翠就想传送？？？");
+				return true;
+			}
+			$sender->getInventory()->removeItem(Item::get(Item::EMERALD, 0, 1));
 		}
 
 		$target = null;
@@ -90,28 +99,6 @@ class TeleportCommand extends VanillaCommand{
 		if(count($args) < 3){
 			$origin->teleport($target);
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", [$origin->getName(), $target->getName()]));
-
-			return true;
-		}elseif($target->getLevel() !== null){
-			if(count($args) === 4 or count($args) === 6){
-				$pos = 1;
-			}else{
-				$pos = 0;
-			}
-
-			$x = $this->getRelativeDouble($target->x, $sender, $args[$pos++]);
-			$y = $this->getRelativeDouble($target->y, $sender, $args[$pos++], 0, 128);
-			$z = $this->getRelativeDouble($target->z, $sender, $args[$pos++]);
-			$yaw = $target->getYaw();
-			$pitch = $target->getPitch();
-
-			if(count($args) === 6 or (count($args) === 5 and $pos === 3)){
-				$yaw = $args[$pos++];
-				$pitch = $args[$pos++];
-			}
-
-			$target->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
-			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success.coordinates", [$target->getName(), round($x, 2), round($y, 2), round($z, 2)]));
 
 			return true;
 		}
