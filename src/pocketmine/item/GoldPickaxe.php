@@ -27,7 +27,7 @@ class GoldPickaxe extends Tool{
 		parent::__construct(self::GOLD_PICKAXE, $meta, $count, "Gold Pickaxe");
 	}
 
-	public function isPickaxe(){
+	public function isSword(){
 		return Tool::TIER_GOLD;
 	}
 

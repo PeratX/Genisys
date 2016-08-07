@@ -27,7 +27,7 @@ class DiamondShovel extends Tool{
 		parent::__construct(self::DIAMOND_SHOVEL, $meta, $count, "Diamond Shovel");
 	}
 
-	public function isShovel(){
+	public function isSword(){
 		return Tool::TIER_DIAMOND;
 	}
 

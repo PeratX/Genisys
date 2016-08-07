@@ -1039,8 +1039,8 @@ class CraftingManager{
 
 	protected function registerArmor(){
 		$types = [
-			[Item::LEATHER, Item::FIRE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
-			[Item::LEATHER_CAP, Item::CHAIN_HELMET, Item::IRON_HELMET, Item::DIAMOND_HELMET, Item::GOLD_HELMET],
+			[Item::LEATHER, Item::FIRE, Item::IRON_INGOT],
+			[Item::LEATHER_CAP, Item::CHAIN_HELMET, Item::IRON_HELMET],
 			[
 				Item::LEATHER_TUNIC,
 				Item::CHAIN_CHESTPLATE,
@@ -1088,8 +1088,8 @@ class CraftingManager{
 
 	protected function registerWeapons(){
 		$types = [
-			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
-			[Item::WOODEN_SWORD, Item::STONE_SWORD, Item::IRON_SWORD, Item::DIAMOND_SWORD, Item::GOLD_SWORD],
+			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT],
+			[Item::WOODEN_SWORD, Item::STONE_SWORD, Item::IRON_SWORD],
 		];
 		for($i = 1; $i < 2; ++$i){
 			foreach($types[$i] as $j => $type){
@@ -1114,11 +1114,11 @@ class CraftingManager{
 
 	protected function registerTools(){
 		$types = [
-			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
-			[Item::WOODEN_PICKAXE, Item::STONE_PICKAXE, Item::IRON_PICKAXE, Item::DIAMOND_PICKAXE, Item::GOLD_PICKAXE],
-			[Item::WOODEN_SHOVEL, Item::STONE_SHOVEL, Item::IRON_SHOVEL, Item::DIAMOND_SHOVEL, Item::GOLD_SHOVEL],
-			[Item::WOODEN_AXE, Item::STONE_AXE, Item::IRON_AXE, Item::DIAMOND_AXE, Item::GOLD_AXE],
-			[Item::WOODEN_HOE, Item::STONE_HOE, Item::IRON_HOE, Item::DIAMOND_HOE, Item::GOLD_HOE],
+			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT],
+			[Item::WOODEN_PICKAXE, Item::STONE_PICKAXE, Item::IRON_PICKAXE],
+			[Item::WOODEN_SHOVEL, Item::STONE_SHOVEL, Item::IRON_SHOVEL],
+			[Item::WOODEN_AXE, Item::STONE_AXE, Item::IRON_AXE],
+			[Item::WOODEN_HOE, Item::STONE_HOE, Item::IRON_HOE],
 		];
 		$shapes = [
 			[
