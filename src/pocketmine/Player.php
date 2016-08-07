@@ -3025,8 +3025,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						break;
 				}
 
-				$this->startAction = -1;
-				$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, false);
+				if($packet->action !== PlayerActionPacket::ACTION_JUMP){
+					$this->startAction = -1;
+					$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, false);
+				}
 				break;
 
 			case ProtocolInfo::REMOVE_BLOCK_PACKET:
@@ -3144,6 +3146,19 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							Server::getInstance()->getPluginManager()->callEvent($fireEv);
 							if(!$fireEv->isCancelled()){
 								$target->setOnFire($fireEv->getDuration());
+							}
+						}
+						//Thorns
+						if($this->isSurvival()){
+							$ev->createThornsDamage();
+							if($ev->getThornsDamage() > 0){
+								$thornsEvent = new EntityDamageByEntityEvent($target, $this, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $ev->getThornsDamage(), 0);
+								if(!$thornsEvent->isCancelled()){
+									if($this->attack($thornsEvent->getFinalDamage(), $thornsEvent) === true){
+										$thornsEvent->useArmors();
+										$ev->setThornsArmorUse();
+									}
+								}
 							}
 						}
 						$ev->useArmors();
@@ -4325,12 +4340,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 *
 	 * @return int
 	 */
-	public function addWindow(Inventory $inventory, int $forceId = null) : int{
+	public function addWindow(Inventory $inventory, int $forceId = -1) : int{
 		if($this->windows->contains($inventory)){
 			return $this->windows[$inventory];
 		}
 
-		if($forceId === null){
+		if($forceId === -1){
 			$this->windowCnt = $cnt = max(2, ++$this->windowCnt % 99);
 		}else{
 			$cnt = (int) $forceId;
