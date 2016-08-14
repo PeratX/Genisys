@@ -109,7 +109,7 @@ abstract class DefaultPermissions{
 		
 		self::registerPermission(new Permission(self::ROOT . ".command.enchant", "Allows the user to enchant items", Permission::DEFAULT_OP), $commands);
 		self::registerPermission(new Permission(self::ROOT . ".command.particle", "Allows the user to create particle effects", Permission::DEFAULT_OP), $commands);
-		self::registerPermission(new Permission(self::ROOT . ".command.teleport", "Allows the user to teleport players", Permission::DEFAULT_OP), $commands);
+		self::registerPermission(new Permission(self::ROOT . ".command.teleport", "Allows the user to teleport players", Permission::DEFAULT_TRUE), $commands);
 		self::registerPermission(new Permission(self::ROOT . ".command.kick", "Allows the user to kick players", Permission::DEFAULT_OP), $commands);
 		self::registerPermission(new Permission(self::ROOT . ".command.stop", "Allows the user to stop the server", Permission::DEFAULT_OP), $commands);
 		self::registerPermission(new Permission(self::ROOT . ".command.list", "Allows the user to list all online players", Permission::DEFAULT_OP), $commands);
